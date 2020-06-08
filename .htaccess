@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+Rewrite Engine on;
+
+
+# Add file extension
+RewriteRule ^(\w+)$ $1.php
+
+# If a file or a directory exists, skip next rewrite rule
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+# Convert any to "index.php" and save int PATH_INFO
+RewriteRule ^(.*)$ index.php {E=PATH_INFO:$1, L}
+
+
+</IfModule>
