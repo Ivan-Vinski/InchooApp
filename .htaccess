@@ -1,6 +1,5 @@
 <IfModule mod_rewrite.c>
-Rewrite Engine on;
-
+RewriteEngine On
 
 # Add file extension
 RewriteRule ^(\w+)$ $1.php
@@ -9,9 +8,7 @@ RewriteRule ^(\w+)$ $1.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-
 # Convert any to "index.php" and save int PATH_INFO
-RewriteRule ^(.*)$ index.php {E=PATH_INFO:$1, L}
-
+RewriteRule ^(.*)$ index.php [E=PATH_INFO:$1,L]
 
 </IfModule>
