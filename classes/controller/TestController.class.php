@@ -1,8 +1,8 @@
 <?php
 
-class IndexController{
+class TestController{
 	private static $instances = [];
-	
+
 	private function __construct(){}
 
 	public static function getControllerInstance(){
@@ -14,12 +14,14 @@ class IndexController{
 	}
 
 	public function renderPage(){
-		$pom = static::class;
 		ob_start();
-		include BP."/classes/view/index.phtml";
+		include BP."/classes/view/test.phtml";	
 		$content = ob_get_clean();
 		echo $content;
 	}
+
+
 }
+
 
  ?>

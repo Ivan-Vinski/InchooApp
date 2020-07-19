@@ -4,14 +4,15 @@ final class App{
 
 	public static function start(){
 		$request = Request::getRequestInstance();
-		$path = $request->getPathInfo();
-
+		$path = trim(ucfirst($request->getPathInfo()), ".php");
 		$controller = $path."Controller";
-
-
 		if (class_exists($controller)){
 			$controllerInstance = $controller::getControllerInstance();
 			$controllerInstance->renderPage();
+		}
+		else{
+			$controllerInstance = ErrorController::getControllerInstance();
+			$controllerInstance->renderPage();			
 		}
 
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title> Home </title>
+		<meta charset="UTF-8"></meta>
+		<link rel="stylesheet" type="text/css" href="./classes/view/css/home.css"></link>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+	</head>
+
+	<body>
+
+		<header>
+			<div class="headerMainContainer">
+				<p>something</p>
+			</div>
+
+		</header>
+			<script>
+				function showLogin(){
+					var loginForm = document.getElementById("loginForm");
+					if (loginForm.style.display == "none"){
+						loginForm.style.display = "block";
+					}
+					else{
+						loginForm.style.display = "none";
+					}
+				
+				}
+			</script>
+
+
+		<section>
+			<div class="titleContainer">
+				<h id="title" >InchooApp</h>
+			</div>
+
+			<div class="buttonsContainer">
+				<div class="buttonContainer"><button id="photoCounterButton" class="homeButtons" type="button" onclick="location.href= 'test'">PhotoCounter</button></div>
+				<div class="buttonContainer"><button id="loginButton" class="homeButtons" type="button" onclick="showLogin();">LOGIN</button></div>
+			</div>
+			
+			<div class="formContainer">
+
+				<form id="loginForm" action="" method="post">
+					<label for="usernameInput">Username: </label><input type="text" id="usernameInput" name="usernameInput"></input><br>
+					<label for="passwordInput">Password: </label><input type="text" id="passwordInput" name="passwordInput"></input><br>
+					<input type="Submit" value="Submit">
+
+				</form>
+
+			</div>
+			
+		</section>
+
+		<footer>
+			<p>something</p>
+		</footer>
+
+	</body>
+
+</html>

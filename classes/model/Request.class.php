@@ -16,22 +16,24 @@ class Request
   {
     $cls = static::class;
     if (!isset(self::$instances[$cls])) self::$instances[$cls] = new static;
-
     return self::$instances[$cls];
-
   }
 
   public static function getPathInfo()
   {
     // phpinfo();
     if (isset($_SERVER["PATH_INFO"])){
-      echo "A";
+ //     echo "A";
+//	  var_dump($_SERVER["PATH_INFO"]);
       return $_SERVER["PATH_INFO"];
     }
     else if (isset($_SERVER["REDIRECT_PATH_INFO"])){
-      return "Error";
+//		echo "B";
+//		var_dump($_SERVER["REDIRECT_PATH_INFO"]);
+      return $_SERVER["REDIRECT_PATH_INFO"];
+
     }
-    else return "Index";
+    else return "Home";
   }
 
 }
