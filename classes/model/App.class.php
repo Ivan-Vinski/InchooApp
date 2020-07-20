@@ -15,7 +15,6 @@ final class App{
 			$controllerInstance->renderPage();			
 		}
 
-
 	// TODO:
 		// perform redirect
 		// i need a page to redirect to
@@ -23,11 +22,5 @@ final class App{
 		// from here we only go to 404 or index page
 
 	}
-
 }
-
-
-
-
-
 ?>

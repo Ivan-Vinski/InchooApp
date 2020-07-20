@@ -14,7 +14,6 @@ class HomeController{
 	}
 
 	public function renderPage(){
-		$pom = static::class;
 		ob_start();
 		include BP."/classes/view/home.phtml";
 		$content = ob_get_clean();
