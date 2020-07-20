@@ -35,7 +35,7 @@ class Request
       return $_SERVER["REDIRECT_PATH_INFO"];
     }
 	//		Used when rewrite rule doesn't apply
-    else return "Home";
+    else return "home";
   }
 
 }

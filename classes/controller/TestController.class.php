@@ -1,6 +1,7 @@
 <?php
 
-class TestController{
+class TestController extends AbstractSingletonController{
+	/*
 	private static $instances = [];
 
 	private function __construct(){}
@@ -20,7 +21,7 @@ class TestController{
 		echo $content;
 	}
 
-
+	 */
 }
 
 

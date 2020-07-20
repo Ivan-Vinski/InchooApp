@@ -1,6 +1,7 @@
 <?php
 
-class HomeController{
+class HomeController extends AbstractSingletonController{
+	/*
 	private static $instances = [];
 	
 	private function __construct(){}
@@ -19,6 +20,7 @@ class HomeController{
 		$content = ob_get_clean();
 		echo $content;
 	}
+	 */
 }
 
  ?>

@@ -1,6 +1,7 @@
 <?php
 
-class ErrorController{
+class ErrorController extends AbstractSingletonController{
+	/*
 	private static $instances = [];
 
 
@@ -22,7 +23,7 @@ class ErrorController{
 		echo $content;
 	}
 
-
+	 */
 }
 
 
