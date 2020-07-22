@@ -1,32 +1,32 @@
+/*
+ * GLOBALS
+ */
 *{
 	position:relative;
 	margin:0;
 	padding:0;
+	font-family:'Roboto', sans-serif;
 }
 
 body{
-	background-color:white;
 	height:100vh;
 	display:grid;
 	grid-template-rows: 1fr 15fr 1fr;
-	overflow:hide;
 }
 
-header{
-	width:100%;
-}
-
+/*
+ * Header
+ */
 .headerMainContainer{
-	background-color:orange;
+	background-color:rgb(30, 30, 30);
 	width:100%;
 	height:100%;
 	margin:auto;
-
 }
 
-section{
-	overflow:hide;
-}
+/*
+ * Title
+ */
 
 .titleContainer{
 	z-index:2;
@@ -36,8 +36,16 @@ section{
 
 #title{
 	margin:auto;
-	font-size:25px;
+	color:white;
+	font-size:65px;
+	font-family:"Kaushan Script", cursive;
+	top:5px;
+
 }
+
+/*
+ * Carousel
+ */
 
 .carousel, .carousel-inner, .item{
 	overflow:hide;
@@ -52,24 +60,37 @@ section{
 	position:absolute;
 }
 
+.moti{
+	font-family:"Kaushan Script", cursive;
+	color:white;
+	font-size:50px;
+	font-weight:bold;
+	bottom:20%;
+}
+
 img{
 	width:100%;
 	height:100%;
 	bottom:10%;
 }
-.buttonContainer{
-	position:relative;
-	text-align:center;
 
-}
+/*
+ * Photo counter
+ */
 
-.homeButtons{
-	position:relative;
+.photoCounterContainer{
+	top:10%;
+	width:350px;
 	margin:auto;
-	cursor:pointer;
-	border-radius:5%;
+	text-align:center;
 }
+
 #photoCounterButton{
+	background-color:lightblue;
+	margin:auto;
+	font-size:15px;
+	padding:2px;
+	width:150px;
 	background-color:lightblue;
 	
 }
@@ -78,14 +99,135 @@ img{
 	
 }
 
+
+/*
+ * Form
+ */
+
 .formContainer{
 	position:relative;
 	width:100%;
+	top:5%;
 	text-align:center;
+	width:350px;
+	margin:auto;
+	background-color:rgba(40, 40, 40, 0.7);
+	padding:25px 25px 5px 25px;
+	border:2px solid black;
+	border-radius: 10px;
 
 }
-footer{
+
+form{
+	height:255px;
+	width:100%;
+}
+
+/*
+ * Labels for username and password
+ */
+
+.label{
+	display:block !important;
+	color:white;
+	font-size:17px !important;
+
+}
+
+
+/*
+ * Remember me and register commons
+ */
+
+.rememberRegisterContainer{
+	width:50%;
+	padding:8px;
+	margin-top:10px;
+}
+
+/*
+ * Remember me
+ */
+
+#rememberMeContainer{
+	float:right;
+	text-align:right;
+}
+
+#labelRememberMe{
+	display:inline;
+	color:white;
+	font-size:14px;
+}
+
+#rememberMeInput{
+	vertical-align:middle;
+	margin:0;
+	display:inline;
+	cursor:pointer;
+
+}
+
+/*
+ * Register
+ */
+
+#registerContainer{
+	float:left;
+	text-align:left;
+
+}
+
+#registerButton{
+	font-size:14px;
+	font-weight:bold;
+	vertical-align:middle;
+	color:white;
+	cursor:pointer;
+	left:10px;
+}
+
+/*
+ * Submit button
+ */
+
+#submitButton{
 	background-color:orange;
+	padding:5px;
+	color:black;
+	border:1px solid black;
+	width:150px;
+	border-radius:3%;
+	font-weight:bold;
+	font-size:18px;
+	transition: all .5s ease;
+	-webkit-transition: all .5s ease;
+}
+
+#submitButton:hover{
+	background-color:orange;
+	color:white;
+	border:1px solid white;
+}
+
+footer{
+	background-color:rgb(30, 30, 30);
+	display:grid !important;
+	grid-template-columns:1fr 1fr;
 
 }
 
+.footerContainer{
+	
+}
+
+#developerContainer{
+	text-align:left;
+	height:100%;
+}
+
+#developerContainer p{
+	color:white;
+	font-weight:bold;
+	padding:10px;
+}
