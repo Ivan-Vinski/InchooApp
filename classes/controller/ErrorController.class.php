@@ -15,15 +15,16 @@ class ErrorController extends AbstractSingletonController{
 		}
 		return self::$instances[$cls];
 	}
-
-	public function renderPage(){
+	*/
+	public function renderPage($msg=NULL){
 		ob_start();
 		include BP."/classes/view/error.phtml";	
 		$content = ob_get_clean();
 		echo $content;
 	}
 
-	 */
+	 
+
 }
 
 

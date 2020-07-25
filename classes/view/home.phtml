@@ -9,9 +9,17 @@
 		<link rel="stylesheet" type="text/css" href="./classes/view/css/home.css"></link>
  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 	</head>
+
+<script language="JavaScript" type="text/javascript">
+  $(document).ready(function(){
+    $('#myCarousel').carousel({
+      interval: 1500
+    })
+  });
+</script>
 
 	<body>
 
@@ -75,7 +83,7 @@
 				<!--
 					Remember me button (use cookies, think about session)
 				-->
-				<form id="loginForm" action="" method="post">
+				<form id="loginForm" action="<?php HomeController::login(); ?>" method="post">
 					<label id="labelUsername" class="label" for="usernameInput">Username: </label><input type="text" id="usernameInput" name="usernameInput"></input>
 					<br><br>
 					<label id="labelPassword" class="label" for="passwordInput">Password: </label><input type="text" id="passwordInput" name="passwordInput"></input>

@@ -25,7 +25,7 @@ class Request
     if (isset($_SERVER["PATH_INFO"])){
 		//    This doesn't seem to be happening except with strange URL's:
 		//    localhost/inchooApp/index.php/something/
-		//    /something would be in PATH_INFO variable
+		//    "/something" would be in PATH_INFO variable
 		//	  var_dump($_SERVER["PATH_INFO"]);
       return $_SERVER["PATH_INFO"];
     }

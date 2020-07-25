@@ -21,6 +21,18 @@ class HomeController extends AbstractSingletonController{
 		echo $content;
 	}
 	 */
+	public static function login(){
+		
+
+		/*
+		 * Send login information to App
+		 * App needs to contact database handler
+		 * and retrieve data from database.
+		 * App sends the data back to appropriate
+		 * Controller which calls respective View
+		 * to display the page.
+		 */
+	}
 }
 
  ?>
