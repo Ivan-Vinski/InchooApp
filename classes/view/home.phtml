@@ -24,23 +24,21 @@
       		interval: 1500
     		})
   		});
-		/*
-		function count($count){
-			alert("jo");
-			$('#photoCounterButton').value = $count;	
-		}
-		 */	
+
 		function countPhotos(){
 			var xhttp;
 			xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function(){
 				if (this.readyState == 4 && this.status==200){
 					document.getElementById("photoCountContainer").innerHTML = this.responseText;
-					document.getElementById("photoCount").style.color="white";
-					document.getElementById("photoCount").style.fontWeight="bolder";
-					document.getElementById("photoCount").style.fontSize="90px";
-					document.getElementById("photoCount").style.fontFamily="Kaushan script, cursive";
-
+					var photoCount = document.getElementById("photoCount");
+					photoCount.style.color="white";
+					photoCount.style.fontWeight="bolder";
+					photoCount.style.fontSize="90px";
+					photoCount.style.fontFamily="Kaushan script, cursive";
+					var max = parseInt(photoCount.innerText);
+					photoCount.innerText = "#0";
+					setTimeout( function() { animate(0, max); }, 100);
 
 				}
 			};
@@ -48,6 +46,15 @@
 			xhttp.send();
 		}
 
+		function animate(current, max){
+			if (current != max){
+				current++;
+				document.getElementById("photoCount").innerText = "#".concat(current);
+				setTimeout( function() { animate(current, max); }, 60);
+			}
+			return;				
+				
+		}
 	</script>
 
 	<body>
