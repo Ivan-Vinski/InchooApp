@@ -1,4 +1,11 @@
 <?php
+if(isset($_GET['count'])){
+		echo "<script>alert('something');</script>";
+		$count = App::getPhotoCount();
+		echo $count;
+	}
+
+
 
 class HomeController extends AbstractSingletonController{
 	/*
@@ -20,8 +27,17 @@ class HomeController extends AbstractSingletonController{
 		$content = ob_get_clean();
 		echo $content;
 	}
+
 	 */
-	public static function login(){
+	/*
+	public function getPhotoCount(){
+		$count = App::getPhotoCount();
+		echo $count;
+
+	} 
+	 */
+	
+	public function login(){
 		
 
 		/*

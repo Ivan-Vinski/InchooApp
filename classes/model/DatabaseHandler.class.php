@@ -74,6 +74,17 @@ class DatabaseHandler{
 	}
 
  */
+	
+	public function getPhotoCount(){
+		$sql = "SELECT COUNT(*) FROM users u INNER JOIN images i ON u.id_user=i.user_id";
+		
+		$stmnt_count = $this->dbConn->prepare($sql);
+		$stmnt_count->execute();		
+
+		$count = $stmnt_count->fetch();
+		return $count[0];
+	}
+	
 }
 
 

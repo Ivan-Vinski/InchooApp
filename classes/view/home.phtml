@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+<?php
+	$controller = HomeController::getControllerInstance();
+?>
+
 <html>
 
 	<head>
 		<title> Home </title>
 		<meta charset="UTF-8"></meta>
+		<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet"> 
 		<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Kaushan+Script&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700;900&display=swap" rel="stylesheet"> 
 		<link rel="stylesheet" type="text/css" href="./classes/view/css/home.css"></link>
@@ -13,13 +18,37 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 	</head>
 
-<script language="JavaScript" type="text/javascript">
-  $(document).ready(function(){
-    $('#myCarousel').carousel({
-      interval: 1500
-    })
-  });
-</script>
+	<script language="JavaScript" type="text/javascript">
+  		$(document).ready(function(){
+    		$('#myCarousel').carousel({
+      		interval: 1500
+    		})
+  		});
+		/*
+		function count($count){
+			alert("jo");
+			$('#photoCounterButton').value = $count;	
+		}
+		 */	
+		function countPhotos(){
+			var xhttp;
+			xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function(){
+				if (this.readyState == 4 && this.status==200){
+					document.getElementById("photoCountContainer").innerHTML = this.responseText;
+					document.getElementById("photoCount").style.color="white";
+					document.getElementById("photoCount").style.fontWeight="bolder";
+					document.getElementById("photoCount").style.fontSize="90px";
+					document.getElementById("photoCount").style.fontFamily="Kaushan script, cursive";
+
+
+				}
+			};
+			xhttp.open("GET", "ajaxRequest.php?count=1", true);
+			xhttp.send();
+		}
+
+	</script>
 
 	<body>
 
@@ -45,21 +74,21 @@
     			<!-- Wrapper for slides -->
     			<div class="carousel-inner">
       				<div class="item active">
-        				<img src="images/forest.jpeg" alt="forest">
+        				<img src="images/universe.jpeg" alt="forest">
 						<div class="carousel-caption">
 							<p class="moti"> Share your own vision of the universe </p>
 						</div>
 	 				</div>
 
       				<div class="item">
-        				<img src="images/nature.jpeg" alt="nature">
+        				<img src="images/lake.jpeg" alt="nature">
 						<div class="carousel-caption">
 							<p class="moti"> Bring along your friends on an advanture </p>
 						</div>
       				</div>
     
       				<div class="item">
-        				<img src="images/lion.jpeg" alt="lion">
+        				<img src="images/surfer.jpeg" alt="lion">
 						<div class="carousel-caption">
 							<p class="moti"> Let everyone know of your achievments </p>
 						</div>
@@ -83,7 +112,7 @@
 				<!--
 					Remember me button (use cookies, think about session)
 				-->
-				<form id="loginForm" action="<?php HomeController::login(); ?>" method="post">
+				<form id="loginForm" action="<?php $controller->login(); ?>" method="post">
 					<label id="labelUsername" class="label" for="usernameInput">Username: </label><input type="text" id="usernameInput" name="usernameInput"></input>
 					<br><br>
 					<label id="labelPassword" class="label" for="passwordInput">Password: </label><input type="text" id="passwordInput" name="passwordInput"></input>
@@ -101,8 +130,8 @@
 
 			</div>
 			
-			<div class="photoCounterContainer"><button id="photoCounterButton"  type="button" onclick="location.href= 'test'">PhotoCounter</button></div>
-
+			<div class="photoCounterButtonContainer"><button id="photoCounterButton"  type="button" onclick="countPhotos()">#Images</button></div>
+			<div id="photoCountContainer"></div>
 		</section>
 
 		<footer>

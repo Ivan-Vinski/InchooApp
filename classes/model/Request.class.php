@@ -4,23 +4,19 @@
  * Class for handling requests
  * Singleton
  */
-class Request
-{
-
+class Request{
   private static $instances = [];
-
 
   private function __construct() {}
 
-  public static function getRequestInstance()
-  {
+  public static function getRequestInstance(){
     $cls = static::class;
     if (!isset(self::$instances[$cls])) self::$instances[$cls] = new static;
+
     return self::$instances[$cls];
   }
 
-  public static function getPathInfo()
-  {
+  public static function getPathInfo(){
     // phpinfo();
     if (isset($_SERVER["PATH_INFO"])){
 		//    This doesn't seem to be happening except with strange URL's:

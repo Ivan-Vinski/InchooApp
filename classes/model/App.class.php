@@ -1,6 +1,7 @@
 <?php
-final class App{
 
+final class App{
+	private static $dbHandler;
 
 	public static function start(){
 
@@ -22,14 +23,11 @@ final class App{
 	}
 
 	private static function checkDB(){
-		$dbHandler = DatabaseHandler::getDBInstance();
-		if ($dbHandler->dbConnect()){
+		self::$dbHandler = DatabaseHandler::getDBInstance();
+		if (self::$dbHandler->dbConnect()){
 			// Connection succesfull
-			echo "<script>alert('Connection succesful');</script>";
-			if ($dbHandler->createTables()){
-				echo "<script>alert('Create tables created');</script>";
+			if (self::$dbHandler->createTables()){
 				return true;	
-
 			}
 			else {
 				self::loadPage("ErrorController", "could not create tables");
@@ -42,12 +40,6 @@ final class App{
 			return false;
 		}
 		
-		
-		/*
-		 * CONTINUE CHECKING THE DATABASE
-		 * check if all tables exist
-		 * create them if they do not
-		 */
 	}
 
 	private static function loadPage($page=NULL, $msg=NULL){
@@ -63,9 +55,13 @@ final class App{
 			$controller->renderPage($msg);
 			return;
 		}
+		
 		else{
 			$controller = (trim(ucfirst((Request::getRequestInstance())->getPathInfo()), ".php"))."Controller";
-			if (class_exists($controller)){
+			if ($controller == "AjaxRequestController"){
+				($controller::getControllerInstance())->renderPage(self::getPhotoCount());
+			}
+			else if (class_exists($controller)){
 				($controller::getControllerInstance())->renderPage();
 			}
 			else{
@@ -73,6 +69,10 @@ final class App{
 			}
 		}
 	}
-
+	
+	public static function getPhotoCount(){
+		$count = self::$dbHandler->getPhotoCount(); 
+		return $count;
+	}
 }
 ?>

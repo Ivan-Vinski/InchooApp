@@ -22,6 +22,8 @@ spl_autoload_register(function($class){
 	}
 });
 // initialize application
+//
+//
 App::start();
 
 ?>
