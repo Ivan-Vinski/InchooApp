@@ -2,17 +2,14 @@
 
 final class App{
 	private static $dbHandler;
-
 	public static function start(){
-
-
 		/*
 		 * Check if all database tables exist
 		 * and create them if they don't.
 		 * Use database handler
 		 */
 		if(self::checkDB()){
-			self::loadPage();
+			self::callController();
 		}
 		// TODO:
 		// perform redirect
@@ -30,19 +27,19 @@ final class App{
 				return true;	
 			}
 			else {
-				self::loadPage("ErrorController", "could not create tables");
+				self::callController("ErrorController", "could not create tables");
 				return false;
 			}
 		}
 		else{
 			// Connection failed, go to 404
-			self::loadPage("ErrorController", "could not connect to database");
+			self::callController("ErrorController", "could not connect to database");
 			return false;
 		}
 		
 	}
 
-	private static function loadPage($page=NULL, $msg=NULL){
+	public static function callController($page=NULL, $msg=NULL){
 		/*
 		 * "getPathInfo()" returns "filename.php"
 		 * we need "FilenameController"
@@ -50,29 +47,21 @@ final class App{
 		 *
 		 * If such class doesn't exist, redirect to errorController
 		 */
-		if (isset($page)){
+		if (isset($page) || isset($ms)){
 			$controller = $page::getControllerInstance();
-			$controller->renderPage($msg);
+			$controller->invokeController($msg);
 			return;
 		}
 		
 		else{
 			$controller = (trim(ucfirst((Request::getRequestInstance())->getPathInfo()), ".php"))."Controller";
-			if ($controller == "AjaxRequestController"){
-				($controller::getControllerInstance())->renderPage(self::getPhotoCount());
-			}
-			else if (class_exists($controller)){
-				($controller::getControllerInstance())->renderPage();
+			if (class_exists($controller)){
+				($controller::getControllerInstance())->invokeController();
 			}
 			else{
-				(ErrorController::getControllerInstance())->renderPage("404: file not found");
+				(ErrorController::getControllerInstance())->invokeController("404: file not found");
 			}
 		}
-	}
-	
-	public static function getPhotoCount(){
-		$count = self::$dbHandler->getPhotoCount(); 
-		return $count;
 	}
 }
 ?>

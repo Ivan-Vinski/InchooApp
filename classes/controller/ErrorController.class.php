@@ -16,7 +16,7 @@ class ErrorController extends AbstractSingletonController{
 		return self::$instances[$cls];
 	}
 	*/
-	public function renderPage($msg=NULL){
+	public function invokeController($msg=NULL){
 		ob_start();
 		include BP."/classes/view/error.phtml";	
 		$content = ob_get_clean();

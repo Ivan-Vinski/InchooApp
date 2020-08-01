@@ -29,7 +29,7 @@ body{
  */
 
 .titleContainer{
-	z-index:2;
+	z-index:1;
 	width:100%;
 	text-align:center;
 }
@@ -85,7 +85,7 @@ img{
 	top:5%;
 	text-align:center;
 	width:350px;
-	height:300px;
+	height:330px;
 	margin:auto;
 	background-color:rgba(40, 40, 40, 0.7);
 	padding:25px 25px 5px 25px;
@@ -106,10 +106,15 @@ form{
 .label{
 	display:block !important;
 	color:white;
-	font-size:17px !important;
+	font-size:20px !important;
 
 }
 
+#usernameInput, #passwordInput{
+	font-family:"Roboto", sans-serif;
+	font-size:17px;
+	text-align:center;
+}
 
 /*
  * Remember me and register commons
@@ -117,7 +122,7 @@ form{
 
 .rememberRegisterContainer{
 	width:50%;
-	padding:8px;
+	padding:10px;
 	margin-top:10px;
 }
 
@@ -133,7 +138,7 @@ form{
 #labelRememberMe{
 	display:inline;
 	color:white;
-	font-size:14px;
+	font-size:16px;
 }
 
 #rememberMeInput{
@@ -155,7 +160,7 @@ form{
 }
 
 #registerButton{
-	font-size:14px;
+	font-size:16px;
 	font-weight:bold;
 	vertical-align:middle;
 	color:white;
@@ -172,10 +177,10 @@ form{
 	padding:5px;
 	color:black;
 	border:1px solid black;
-	width:150px;
+	width:175px;
 	border-radius:3%;
 	font-weight:bold;
-	font-size:18px;
+	font-size:22px;
 	transition: all .5s ease;
 	-webkit-transition: all .5s ease;
 }
@@ -224,6 +229,13 @@ form{
 	text-align:center;
 }
 
+#photoCount{
+	color:white;
+	font-family:"Kaushan Script", cursive;
+	font-size:90px;
+	font-weight:bold;
+	visibility:hidden;
+}
 footer{
 	background-color:rgb(30, 30, 30);
 	display:grid !important;
@@ -245,3 +257,4 @@ footer{
 	font-weight:bold;
 	padding:10px;
 }
+

@@ -17,7 +17,6 @@ class Request{
   }
 
   public static function getPathInfo(){
-    // phpinfo();
     if (isset($_SERVER["PATH_INFO"])){
 		//    This doesn't seem to be happening except with strange URL's:
 		//    localhost/inchooApp/index.php/something/

@@ -7,10 +7,10 @@ class DatabaseHandler{
 	private function __construct(){}
 
 	public static function getDBInstance(){
-		if (!isset($instance)){
-			$instance = new self;
+		if (!isset(self::$instance)){
+			self::$instance = new self;
 		}
-		return $instance;
+		return self::$instance;
 	}
 
 
@@ -84,6 +84,31 @@ class DatabaseHandler{
 		$count = $stmnt_count->fetch();
 		return $count[0];
 	}
+
+	public function getUsername($username){
+		$sql = "SELECT username FROM users WHERE username LIKE '".$username."'";	
+
+		$stmnt_user = $this->dbConn->prepare($sql);
+		$stmnt_user->execute();
+
+		$dbUsername = $stmnt_user->fetch();
+		return (empty($dbUsername)) ? "" : $dbUsername[0]; 
+		
+	}
+
+	public function getPassword($username){
+		$sql = "SELECT password FROM users WHERE username LIKE '".$username."'"; 
+
+		$stmnt_pass = $this->dbConn->prepare($sql);
+		$stmnt_pass->execute();
+
+		$password = $stmnt_pass->fetch();
+
+		return (empty($password)) ? "" : $password[0];
+
+	}
+
+	
 	
 }
 

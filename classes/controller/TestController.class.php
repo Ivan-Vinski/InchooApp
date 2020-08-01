@@ -13,15 +13,16 @@ class TestController extends AbstractSingletonController{
 		}
 		return self::$instances[$cls];
 	}
-
-	public function renderPage(){
+*/
+	public function invokeController(){
 		ob_start();
 		include BP."/classes/view/test.phtml";	
 		$content = ob_get_clean();
 		echo $content;
 	}
 
-	 */
+	 
+
 }
 
 

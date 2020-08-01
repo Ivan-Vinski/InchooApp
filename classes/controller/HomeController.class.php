@@ -1,12 +1,4 @@
 <?php
-if(isset($_GET['count'])){
-		echo "<script>alert('something');</script>";
-		$count = App::getPhotoCount();
-		echo $count;
-	}
-
-
-
 class HomeController extends AbstractSingletonController{
 	/*
 	private static $instances = [];
@@ -20,35 +12,37 @@ class HomeController extends AbstractSingletonController{
 		}
 		return self::$instances[$cls];
 	}
+ */
 
-	public function renderPage(){
+
+	private $model;
+	public function invokeController(){
+		$this->model = HomeModel::getHomeModelInstance();
+		if (isset($_GET['count'])){
+			$photoCount = $this->model->getPhotoCount();
+			echo $photoCount;
+
+		}
+		else if (isset($_POST['usernameInput']) && isset($_POST['passwordInput'])){
+				$loginMsg = $this->model->login($_POST['usernameInput'], $_POST['passwordInput']);
+				self::renderPage(['loginMsg' => $loginMsg, 'usernameVal'=> $_POST['usernameInput']]);
+			}
+		
+		else{
+
+			self::renderPage(['loginMsg' => "", 'usernameVal'=>""]);
+		}	
+	}
+
+
+	private function renderPage($args = []){
 		ob_start();
+		extract($args);
 		include BP."/classes/view/home.phtml";
 		$content = ob_get_clean();
 		echo $content;
 	}
 
-	 */
-	/*
-	public function getPhotoCount(){
-		$count = App::getPhotoCount();
-		echo $count;
-
-	} 
-	 */
-	
-	public function login(){
-		
-
-		/*
-		 * Send login information to App
-		 * App needs to contact database handler
-		 * and retrieve data from database.
-		 * App sends the data back to appropriate
-		 * Controller which calls respective View
-		 * to display the page.
-		 */
-	}
 }
 
  ?>
