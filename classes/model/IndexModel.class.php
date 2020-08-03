@@ -1,40 +1,36 @@
 <?php
 
-class LoginModel{
-	private static $instance;
+class IndexModel{
 	private $dbHandler;
 	
-	private  function __construct(){}
-
-	public static function getHomeModelInstance(){
-		if (!isset(self::$instance)){
-			self::$instance = new self;
-		}
-		return self::$instance;
-	}
+	public  function __construct(){}
 
 	public static function getPhotoCount(){
 		$count = (DatabaseHandler::getDBInstance())->getPhotoCount(); 
 		return $count;
 	}
 
-	public function login($username, $password){
+	public function login(){
 		/* check login data
 		 * db handler makes requests to database
 		 * get feedback, handle redirect	
 		 */
+		$username = Request::post('usernameInput');
+		$password = Request::post('passwordInput');
+
+
 		if(empty($username) || empty($password)){
-			return "Fill in all the fields";
+			View::renderPage('index',['msg' => 'Fill in all the fields', 'usernameVal' => '']); 
+			return;
 		}	
 
 		$this->dbHandler = DatabaseHandler::getDBInstance();
-		
-		$username = $this->cleanData($username);
-		$password = $this->cleanData($password);
-	
+
 		if (empty($this->dbHandler->getUsername($username))){
 			// User with give username not found
-			return "Username not found";
+			View::renderPage('index',['msg' => 'Username not found', 'usernameVal' => $username]); 
+			return;
+
 		}
 
 		$hashedPass = hash("sha512", $password);
@@ -42,18 +38,12 @@ class LoginModel{
 
 		if ($hashedPass != $dbPass){
 			// Passwords doesn't match
-			return "Invalid password";
+			View::renderPage('index',['msg' => 'Invalid password', 'usernameVal' => $username]);
+			return;
 		}
 		// LOGIN SUCCESS, REDIRECT TO USERS PAGE
 		// for now redirecting to error
 		header("Location: error");
-	}
-	
-	public function cleanData($data){
-		$data = htmlspecialchars($data);
-		$data = str_replace("/", "", $data);	
-		$data = str_replace("\\", "", $data);	
-		return $data;
 	}
 
 }

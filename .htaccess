@@ -2,7 +2,7 @@
 RewriteEngine On
 
 # Add file extension
-RewriteRule ^(\w+)$ $1.php
+#RewriteRule ^(\w+)$ $1.php
 
 # If a file or a directory exists, skip next rewrite rule
 RewriteCond %{REQUEST_FILENAME} !-f

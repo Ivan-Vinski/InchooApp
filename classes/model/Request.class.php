@@ -18,7 +18,15 @@ class Request{
       return $_SERVER["REDIRECT_PATH_INFO"];
     }
 	//		Used when rewrite rule doesn't apply
-    else return "login";
+    else return "";
+  }
+
+  public static function post($key){
+  	return (isset($_POST[$key])) ? $_POST[$key] : '';
+  }
+
+  public static function get($key){
+  	return (isset($_GET[$key])) ? $_GET[$key] : '';
   }
 
 }

@@ -47,6 +47,35 @@ final class App{
 		 *
 		 * If such class doesn't exist, redirect to errorController
 		 */
+
+		$pathInfo = Request::getPathInfo();
+		$pathInfo = trim($pathInfo, '/');
+
+		$pathParts = explode('/', $pathInfo);
+
+		if (!isset($pathParts[0]) || empty($pathParts[0])){
+			$controller = 'IndexController';
+		}
+		else {
+			$controller = trim(ucfirst($pathParts[0]), '.php').'Controller';
+		}
+
+		if (!isset($pathParts[1]) || empty($pathParts[1])){
+			$action = 'invokeController';
+		}
+		else {
+			$action = $pathParts[1];
+		}
+
+		if (class_exists($controller) && method_exists($controller, $action)){
+			$controllerInstance = new $controller();
+			$controllerInstance->$action();
+		}
+		
+		
+
+		/*
+
 		if (isset($page) || isset($msg)){
 			$controller = $page::getControllerInstance();
 			$controller->invokeController($msg);
@@ -62,6 +91,7 @@ final class App{
 				(ErrorController::getControllerInstance())->invokeController("404: file not found");
 			}
 		}
+		 */
 	}
 }
 
