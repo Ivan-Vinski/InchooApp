@@ -15,7 +15,7 @@
 
 				}
 			};
-			xhttp.open("GET", "home.php?count=true", true);
+			xhttp.open("GET", "login.php?count=true", true);
 			xhttp.send();
 		}
 		

@@ -81,7 +81,6 @@ img{
 
 .formContainer{
 	position:relative;
-	width:100%;
 	top:5%;
 	text-align:center;
 	width:350px;
@@ -92,6 +91,10 @@ img{
 	border:2px solid black;
 	border-radius: 10px;
 
+}
+
+#registerFormContainer{
+	height:500px;
 }
 
 form{
@@ -110,7 +113,7 @@ form{
 
 }
 
-#usernameInput, #passwordInput{
+.input{
 	font-family:"Roboto", sans-serif;
 	font-size:17px;
 	text-align:center;
@@ -224,7 +227,7 @@ form{
 }
 
 #photoCountContainer{
-	top:12%;
+	top:10%;
 	width:100%;
 	text-align:center;
 }
@@ -232,7 +235,7 @@ form{
 #photoCount{
 	color:white;
 	font-family:"Kaushan Script", cursive;
-	font-size:90px;
+	font-size:70px;
 	font-weight:bold;
 	visibility:hidden;
 }

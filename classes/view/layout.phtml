@@ -8,16 +8,16 @@
 		<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet"> 
 		<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Kaushan+Script&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700;900&display=swap" rel="stylesheet"> 
-		<link rel="stylesheet" type="text/css" href="classes/view/css/home.css">
+		<link rel="stylesheet" type="text/css" href="classes/view/css/login.css">
  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-		<script src="classes/view/ajax/homeScript.js"></script>
+		<script src="classes/view/ajax/loginScript.js"></script>
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 	</head>
 	<body>
-
+		<?php echo $msg ?>
 		<header>
 			<div id="test" class="headerMainContainer">
 				<p>something</p>
@@ -74,32 +74,7 @@
     			</a>
   			</div>
 
-
-			
-			<div class="formContainer">
-				<!--
-					Remember me button (use cookies, think about session)
-				-->
-				<form id="loginForm" action="" method="POST">
-				<label id="labelUsername" class="label">Username: </label><input type="text" id="usernameInput" name="usernameInput" value=<?php echo $usernameVal ?>></input>
-					<br><br>
-					<label id="labelPassword" class="label">Password: </label><input type="password" id="passwordInput" name="passwordInput"></input>
-					<br><br><br>
-					<input type="submit" value="Login" id="submitButton">
-
-					<div id="rememberMeContainer" class="rememberRegisterContainer">
-						<input type="checkbox" id="rememberMeInput" name="rememberMeInput" checked></input><label id="labelRememberMe">   Remember me</label>
-					</div>
-
-					<div id="registerContainer" class="rememberRegisterContainer">
-						<a id="registerButton" href="register">Register</a>
-					</div>
-				</form>
-
-			</div>
-			<div id="loginMsgContainer"> <p id="loginMsg"> <?php echo $loginMsg ?> </p> </div>
-			<div class="photoCounterButtonContainer"><button id="photoCounterButton"  type="button" onclick="countPhotos()">#Images</button></div>
-			<div id="photoCountContainer"><p id="photoCount">#0</p></div>
+				<?php echo $content ?>
 
 		</section>
 		<footer>

@@ -29,6 +29,7 @@ class DatabaseHandler{
 			(
 				id_user INT NOT NULL AUTO_INCREMENT,
 				username VARCHAR(20) NOT NULL,
+				email VARCHAR(20) NOT NULL,
 				password TEXT NOT NULL,
 				PRIMARY KEY(id_user),
 				CONSTRAINT unique_id_user UNIQUE(id_user)
@@ -60,21 +61,7 @@ class DatabaseHandler{
 			return false;	
 		}
 	}
-/*
-	public function getDbConn(){
-		if (isset($dbConn)){
-			return $dbConn;
-		}
-		
-		// test this and make it better
-		 
-		else{
-			return NULL;
-		}
-	}
 
- */
-	
 	public function getPhotoCount(){
 		$sql = "SELECT COUNT(*) FROM users u INNER JOIN images i ON u.id_user=i.user_id";
 		
@@ -108,9 +95,24 @@ class DatabaseHandler{
 
 	}
 
+	public function getEmail($email){
+		$sql = "SELECT email FROM users WHERE email LIKE '".$email."'";
+
+		$stmnt_email = $this->dbConn->prepare($sql);
+		$stmnt_email->execute();
+
+		$email = $stmnt_email->fetch();
+
+		return (empty($email)) ? "" : $email[0];
+	}
+
+	public function addUser($username, $email, $password){
+		$sql = "INSERT INTO users VALUES (default, '".$username."', '".$email."', '".$password."')";
+
+		$stmnt_addUsr = $this->dbConn->prepare($sql);
+		$stmnt_addUsr->execute();
+	}
+
 	
 	
 }
-
-
-?>

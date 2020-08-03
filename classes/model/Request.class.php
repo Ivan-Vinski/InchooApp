@@ -1,21 +1,9 @@
 <?php
 
-/**
+/*
  * Class for handling requests
- * Singleton
  */
 class Request{
-  private static $instances = [];
-
-  private function __construct() {}
-
-  public static function getRequestInstance(){
-    $cls = static::class;
-    if (!isset(self::$instances[$cls])) self::$instances[$cls] = new static;
-
-    return self::$instances[$cls];
-  }
-
   public static function getPathInfo(){
     if (isset($_SERVER["PATH_INFO"])){
 		//    This doesn't seem to be happening except with strange URL's:
@@ -30,9 +18,9 @@ class Request{
       return $_SERVER["REDIRECT_PATH_INFO"];
     }
 	//		Used when rewrite rule doesn't apply
-    else return "home";
+    else return "login";
   }
 
 }
 
- ?>
+ 

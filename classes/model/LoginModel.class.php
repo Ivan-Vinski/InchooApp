@@ -1,11 +1,9 @@
 <?php
 
-class HomeModel{
+class LoginModel{
 	private static $instance;
 	private $dbHandler;
-
 	
-
 	private  function __construct(){}
 
 	public static function getHomeModelInstance(){
@@ -26,13 +24,7 @@ class HomeModel{
 		 * get feedback, handle redirect	
 		 */
 		if(empty($username) || empty($password)){
-			return "<script>
-					toastr.options={
-						'closeButton':true,
-						'positionClass': 'toast-top-center'
-					}
-					toastr['error']('Fill in all the fields', 'Login')
-					 </script>";
+			return "Fill in all the fields";
 		}	
 
 		$this->dbHandler = DatabaseHandler::getDBInstance();
@@ -42,13 +34,7 @@ class HomeModel{
 	
 		if (empty($this->dbHandler->getUsername($username))){
 			// User with give username not found
-			return "<script>
-					toastr.options={
-						'closeButton':true,
-						'positionClass': 'toast-top-center'
-					}
-					toastr['error']('Username not found', 'Login')
-					 </script>";
+			return "Username not found";
 		}
 
 		$hashedPass = hash("sha512", $password);
@@ -56,13 +42,7 @@ class HomeModel{
 
 		if ($hashedPass != $dbPass){
 			// Passwords doesn't match
-			return "<script>
-					toastr.options={
-						'closeButton':true,
-						'positionClass': 'toast-top-center'
-					}
-					toastr['error']('Invalid password', 'Login')
-					 </script>";
+			return "Invalid password";
 		}
 		// LOGIN SUCCESS, REDIRECT TO USERS PAGE
 		// for now redirecting to error

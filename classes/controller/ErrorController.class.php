@@ -17,6 +17,9 @@ class ErrorController extends AbstractSingletonController{
 	}
 	*/
 	public function invokeController($msg=NULL){
+		
+
+
 		ob_start();
 		include BP."/classes/view/error.phtml";	
 		$content = ob_get_clean();

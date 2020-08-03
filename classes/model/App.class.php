@@ -47,14 +47,14 @@ final class App{
 		 *
 		 * If such class doesn't exist, redirect to errorController
 		 */
-		if (isset($page) || isset($ms)){
+		if (isset($page) || isset($msg)){
 			$controller = $page::getControllerInstance();
 			$controller->invokeController($msg);
 			return;
 		}
 		
 		else{
-			$controller = (trim(ucfirst((Request::getRequestInstance())->getPathInfo()), ".php"))."Controller";
+			$controller = (trim(ucfirst(Request::getPathInfo()), ".php"))."Controller";
 			if (class_exists($controller)){
 				($controller::getControllerInstance())->invokeController();
 			}
@@ -64,4 +64,4 @@ final class App{
 		}
 	}
 }
-?>
+
