@@ -62,57 +62,63 @@ class DatabaseHandler{
 		}
 	}
 
+	private function prepareAndExecute($sql, $args = []){
+		$statement = $this->dbConn->prepare($sql);
+		$statement->execute($args);
+		$result = $statement->fetchAll();
+		return $result;
+		
+	
+	}
+
 	public function getPhotoCount(){
 		$sql = "SELECT COUNT(*) FROM users u INNER JOIN images i ON u.id_user=i.user_id";
+		$count = $this->prepareAndExecute($sql);
+		return $count[0][0];
 		
-		$stmnt_count = $this->dbConn->prepare($sql);
-		$stmnt_count->execute();		
-
-		$count = $stmnt_count->fetch();
-		return $count[0];
 	}
 
 	public function getUsername($username){
-		$sql = "SELECT username FROM users WHERE username LIKE '".$username."'";	
-
-		$stmnt_user = $this->dbConn->prepare($sql);
-		$stmnt_user->execute();
-
-		$dbUsername = $stmnt_user->fetch();
-		return (empty($dbUsername)) ? "" : $dbUsername[0]; 
-		
+		$sql = "SELECT username FROM users WHERE username LIKE ?";
+		$dbUsername = $this->prepareAndExecute($sql, array($username));	
+		return (empty($dbUsername)) ? '' : $dbUsername[0][0];
 	}
 
 	public function getPassword($username){
-		$sql = "SELECT password FROM users WHERE username LIKE '".$username."'"; 
-
-		$stmnt_pass = $this->dbConn->prepare($sql);
-		$stmnt_pass->execute();
-
-		$password = $stmnt_pass->fetch();
-
-		return (empty($password)) ? "" : $password[0];
+		$sql = "SELECT password FROM users WHERE username LIKE ?"; 
+		$password = $this->prepareAndExecute($sql, array($username)); 
+		return (empty($password)) ? "" : $password[0][0];
 
 	}
 
 	public function getEmail($email){
-		$sql = "SELECT email FROM users WHERE email LIKE '".$email."'";
-
-		$stmnt_email = $this->dbConn->prepare($sql);
-		$stmnt_email->execute();
-
-		$email = $stmnt_email->fetch();
-
-		return (empty($email)) ? "" : $email[0];
+		$sql = "SELECT email FROM users WHERE email LIKE ?";
+		$email = $this->prepareAndExecute($sql, array($email));
+		return (empty($email)) ? "" : $email[0][0];
 	}
 
 	public function addUser($username, $email, $password){
-		$sql = "INSERT INTO users VALUES (default, '".$username."', '".$email."', '".$password."')";
-
-		$stmnt_addUsr = $this->dbConn->prepare($sql);
-		$stmnt_addUsr->execute();
+		$sql = "INSERT INTO users VALUES (default, ?, ?, ?)";
+		$stmnt = $this->prepareAndExecute($sql, array($username, $email, $password));
 	}
 
-	
+	public function getImagesLocations(){
+		$sql = "SELECT location FROM images";
+		$stmnt = $this->prepareAndExecute($sql);
+		return $stmnt;
+	}
+
+	public function getImagesTitles(){
+		$sql = "SELECT title FROM images";
+		$stmnt = $this->prepareAndExecute($sql);
+		return $stmnt;
+	}
+
+	public function getImagesOwners(){
+		$sql = "SELECT u.username FROM images i INNER JOIN users u ON i.user_id=u.id_user";
+		$stmnt = $this->prepareAndExecute($sql);
+		return $stmnt;
+	}
+
 	
 }

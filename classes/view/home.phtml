@@ -1,0 +1,35 @@
+<?php echo (isset($msg)) ? $msg : ''; ?>
+
+<div id="formContainer">
+
+	<form action='http://localhost/inchooApp/upload' method='post' enctype=multipart/form-data>
+		<input type='file' name='imageInput'>
+		<input type='submit' value='Upload' name='uploadImage'>
+	</form>
+
+
+
+</div>
+
+<?php
+
+for ($i = 0; $i < $photoCount; $i++){
+
+	echo "
+		<div class='photoContainer'>
+			<p>".$imagesTitles[$i][0]." </p>
+			<p>".$imagesOwners[$i][0]." </p>
+			<img src='".$imagesLocations[$i][0]."' alt='image'></img>
+
+
+		</div>
+
+	";
+
+	if ($imagesOwners[$i][0] == Session::getLoggedInUsername()){
+		// display delete image button
+		echo "<p>lol </p>";
+	}
+
+
+}

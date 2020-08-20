@@ -1,11 +1,12 @@
+<?php echo (isset($msg)) ? $msg : ''?>
 <div class="formContainer">
 	<!--
 	Remember me button (use cookies, think about session)
 	-->
-	<form id="loginForm" action="http://localhost/inchooApp/index/login" method="POST">
-		<label id="labelUsername" class="label">Username: </label><input type="text" id="usernameInput" name="usernameInput" class="input" value=<?php echo $usernameVal ?>></input>
+	<form id="loginForm" action="http://localhost/inchooApp/login" method="POST">
+		<label id="labelUsername" class="label">Username: </label><input type="text" id="usernameInput" name="usernameInput" class="input" value=<?php echo (isset($username)) ? $username : '' ?>></input>
 		<br><br>
-		<label id="labelPassword" class="label">Password: </label><input type="password" id="passwordInput" name="passwordInput" class="input"></input>
+		<label id="labelPassword" class="label">Password: </label><input type="password" id="passwordInput" name="passwordInput" class="input" value=<?php echo (isset($password)) ? $password : '' ?>></input>
 		<br><br><br>
 		<input type="submit" value="Login" id="submitButton">
 
@@ -14,7 +15,7 @@
 		</div>
 
 		<div id="registerContainer" class="rememberRegisterContainer">
-			<a id="registerButton" href="http://localhost/inchooApp/register">Register</a>
+			<a id="registerButton" href="http://localhost/inchooApp/signupPage/">Sign up</a>
 		</div>
 	</form>
 

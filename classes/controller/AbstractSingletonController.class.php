@@ -8,11 +8,13 @@ abstract class AbstractSingletonController{
  * 
 */
 	private static $instances = [];
+	protected $session;
 // Not using constructor in a singleton pattern.
 	private function __construct(){}
 
+
 // Making sure single instance is created
-	public static function getControllerInstance(){
+	public static function getInstance(){
 		$cls = static::class;
 		if (!isset(self::$instances[$cls])){
 			self::$instances[$cls] = new static;
@@ -20,4 +22,3 @@ abstract class AbstractSingletonController{
 		return self::$instances[$cls];
 	}
 }
- ?>

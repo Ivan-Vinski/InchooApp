@@ -9,12 +9,12 @@ class Request{
 		//    This doesn't seem to be happening except with strange URL's:
 		//    localhost/inchooApp/index.php/something/
 		//    "/something" would be in PATH_INFO variable
-		//	  var_dump($_SERVER["PATH_INFO"]);
+//			  var_dump($_SERVER["PATH_INFO"]);
       return $_SERVER["PATH_INFO"];
     }
     else if (isset($_SERVER["REDIRECT_PATH_INFO"])){
 		//		Used when .htdocs rewrite rule is applied
-		//		var_dump($_SERVER["REDIRECT_PATH_INFO"]);
+	//			var_dump($_SERVER["REDIRECT_PATH_INFO"]);
       return $_SERVER["REDIRECT_PATH_INFO"];
     }
 	//		Used when rewrite rule doesn't apply

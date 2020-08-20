@@ -1,0 +1,21 @@
+<?php echo (isset($msg)) ? $msg : '' ?>
+<div class="formContainer" id="registerFormContainer">
+	<form action="http://localhost/inchooApp/signup/" method="POST">
+
+
+		<label class="label">Username: </label><input class="input" type="text" name="usernameInput" value=<?php echo (isset($username)) ? $username : '' ?>></input>
+		<br><br>
+		<label class="label">e-mail: </label><input class="input" type="text" name="emailInput"value=<?php echo (isset($email)) ? $email : '' ?>></input>
+		<br><br>
+		<label class="label">Password: </label><input class="input" type="password" name="passwordInput"></input>
+		<br><br>
+		<label class="label">Repeat password: </label><input class="input" type="password" name="passwordRepeatInput"></input>
+		<br><br><br>
+		<input id="submitButton" type="Submit" value="Sign up!" ></input>
+
+		<div id="registerContainer" class="rememberRegisterContainer">
+			<a id="registerButton" href="http://localhost/inchooApp/">Login</a>
+		</div>
+	</form>
+</div>
+

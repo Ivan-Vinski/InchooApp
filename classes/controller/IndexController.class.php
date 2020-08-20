@@ -1,25 +1,33 @@
 <?php
-class IndexController{
+
+class IndexController extends AbstractSingletonController{
+	private $view;
 	private $model;
-
-	public function __construct(){
-		$this->model = new IndexModel();
-	}
-
+	/*
+	 * Get initial arguments from model
+	 * like cookies if they are set
+	 * and pass them to view for rendering
+	 */
 	public function invokeController(){
-		if (isset($_GET['count'])){
-			$photoCount = $this->model->getPhotoCount();
-			echo $photoCount;
+		//$args = $this->model->pageInit();
+		$this->view = new View('loginRegisterLayout');
+		$username = Cookies::getCookies('username');
+		$password = Cookies::getCookies('password');
 
-		}
-		else{
-			View::renderPage('index', ['msg' => "", 'usernameVal'=>""]);
-		}	
+		Session::logout();
+
+		$this->view->renderPage('index', ['username' => $username, 'password' => $password]);
 	}
 
-	public function login(){
-		$this->model->login();
+	/*
+	 * Get number of photos in DB from
+	 * the model and return it to ajax
+	 * script with echo
+	 */
+
+	public function getPhotoCount(){
+		$this->model = Images::getInstance(); 
+		$photoCount = $this->model->getPhotoCount();
+		echo $photoCount;	
 	}
 }
-
- ?>
