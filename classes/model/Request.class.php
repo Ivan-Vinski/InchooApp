@@ -21,6 +21,10 @@ class Request{
     else return "";
   }
 
+  public static function getMethod(){
+  	return $_SERVER['REQUEST_METHOD'];
+  }
+
   public static function post($key){
   	return (isset($_POST[$key])) ? $_POST[$key] : '';
   }

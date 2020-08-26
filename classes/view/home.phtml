@@ -1,8 +1,11 @@
 <?php echo (isset($msg)) ? $msg : ''; ?>
 
-<div id="formContainer">
 
-	<form action='http://localhost/inchooApp/upload' method='post' enctype=multipart/form-data>
+
+<div id="formContainer" class='tabcontent'>
+
+	<form action='http://localhost/inchooApp/home/' method='post' enctype=multipart/form-data>
+	<label>Title: </label><input type='text' name='titleInput' value= <?php echo (isset($imageTitle)) ? $imageTitle : '' ?>>
 		<input type='file' name='imageInput'>
 		<input type='submit' value='Upload' name='uploadImage'>
 	</form>
@@ -12,24 +15,26 @@
 </div>
 
 <?php
+echo "<div id='photosContainer' class='tabcontent'>";
 
 for ($i = 0; $i < $photoCount; $i++){
 
 	echo "
 		<div class='photoContainer'>
-			<p>".$imagesTitles[$i][0]." </p>
-			<p>".$imagesOwners[$i][0]." </p>
-			<img src='".$imagesLocations[$i][0]."' alt='image'></img>
-
-
-		</div>
+			<p id='username'>".$images[$i]->username."</p>
+			<p id='title'>".$images[$i]->imageTitle." </p>
+			<img src="."http://localhost/inchooApp/images/".$images[$i]->imageLocation." alt='image'></img>
 
 	";
 
-	if ($imagesOwners[$i][0] == Session::getLoggedInUsername()){
+	if ($images[$i]->user_id == Session::getLoggedInUserId()){
 		// display delete image button
-		echo "<p>lol </p>";
+		echo "<br><button >Delete </button>";
 	}
+
+	echo "</div>";
 
 
 }
+
+echo "</div>";

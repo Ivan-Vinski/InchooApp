@@ -15,12 +15,17 @@ class Session{
 	public static function isLoggedIn(){
 		if (!isset($_SESSION['username']) || empty($_SESSION['username'])){
 			return false;
-		}	
+		}
 		else return true;
 	}
 
+	public static function getLoggedInUserId(){
+		return $_SESSION['id_user'];	
+	}
+
 	public static function getLoggedInUsername(){
-		return $_SESSION['username'];	
+		return $_SESSION['username'];
+
 	}
 
 }

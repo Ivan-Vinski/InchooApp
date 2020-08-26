@@ -2,7 +2,6 @@
 class View{
 
 	private $layout;
-	private $session;
 
 	public function __construct($layout){
 		$this->layout = $layout;
@@ -14,17 +13,21 @@ class View{
 
 	public function renderPage($name, $args = []){
 		ob_start();
-		//$args = self::escapeHTML($args);
+		$args = self::escapeHTML($args);
 		extract($args);
 
-		if (isset($args['msg'])) $msg = self::createToastr($args['msgTitle'], $args['msg'], $args['msgType']);
-		include BP."/classes/view/".$name.".phtml";
+		if (isset($args['msg'])) $msg = $this->createToastr($args['msgTitle'], $args['msg'], $args['msgType']);
+		include BP."classes/view/".$name.".phtml";
 		$content = ob_get_clean();
 
 		include BP."/classes/view/".$this->layout.".phtml";
+//		phpinfo();
+	//	echo $_SERVER['REQUEST_METHOD'];
+	//	echo " ";
+	//	var_dump($_GET);
 	}
 
-	private static function createToastr($msgTitle = '', $msg = '', $msgType = 'error'){
+	private function createToastr($msgTitle = '', $msg = '', $msgType = 'error'){
 		if(empty($msg)) return $msg;
 
 		return "<script>
@@ -38,8 +41,17 @@ class View{
 
 	private static function escapeHTML($values = []){
 		foreach($values as $key => $value){
-			 $values[$key] = htmlspecialchars($value);
+			if ($key == 'images'){
+				foreach($value as $image){
+					$image->imageTitle = htmlspecialchars($image->imageTitle);
+					$image->imageLocation = htmlspecialchars($image->imageLocation);
+				}
+			}
+			else{
+				$values[$key] = htmlspecialchars($value);
+			}
 		}
+
 		return $values;
 	}
 

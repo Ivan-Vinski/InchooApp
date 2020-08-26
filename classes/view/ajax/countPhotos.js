@@ -15,7 +15,7 @@ function countPhotos(){
 			setTimeout( function() { animate(0, max); }, 100);
 		}
 	};
-	xhttp.open("GET", "http://localhost/inchooApp/index/getPhotoCount", true);
+	xhttp.open("GET", "http://localhost/inchooApp/photoCount", true);
 	xhttp.send();
 }
 		

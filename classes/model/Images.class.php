@@ -3,15 +3,17 @@
 
 class Images{
 
-	private $dbHandler;
 	private static $instance;
-
-	private $title;
-	private $location;
-	private $owner;
+	public $images;
+	public $photoCount;
 
 	private function __construct(){
-		$this->dbHandler = DatabaseHandler::getDBInstance();
+		/*
+		/ get all images as images objects into $images array
+		/ get photo count
+		*/
+		$this->images = ORM::getImages();
+		$this->photoCount = count($this->images);
 	}
 
 	public static function getInstance(){
@@ -22,49 +24,109 @@ class Images{
 	}
 
 	public function getPhotoCount(){
-		$count = $this->dbHandler->getPhotoCount();
-		return $count;
+		return $this->photoCount;
 	}
 
-	public function getImagesOwners(){
-		$owners = $this->dbHandler->getImagesOwners();
-		return $owners;
-	}
-
-	public function getImagesTitles(){
-		$titles = $this->dbHandler->getImagesTitles();
-		return $titles;
-	}
-
-	public function getImagesLocations(){
-		$locations = $this->dbHandler->getImagesLocations();
-		return $locations;
-
-	}
 
 	public function uploadImage(){
-		$target = "images/";
+		$user_id = Session::getLoggedInUserId();
+		$username = Session::getLoggedInUsername();
+		$imageTitle = Request::post('titleInput');
+		$file = $_FILES['imageInput'];
+		$filename = $file['name'];
+		$imageLocation = $username."/".$filename;
 
-
-		if (!isset($_FILES['imageInput']['name']) || empty($_FILES['imageInput']['name'])){
+		if (!isset($file['name']) || empty($file['name'])){
 			return array('msg' => 'Please, select image to upload.', 'msgType' => 'error');
 		}
 
 		/*
-		/ Check if file is a valid image
-		*/
-		$finfo = new finfo(FILEINFO_MIME_TYPE);
-		$fileType = $finfo->file($_FILES['imageInput']['tmp_name']);
-		if (false === array_search($fileType, array('image/jpg', 'image/jpeg', 'image/png'))){
-			// false format
-			return array('msg' => 'Please, use the following image formats: jpg, jpeg, png.', 'msgType' => 'error');
+		 * Check if file has forbiden characters
+		 */
+
+		if (preg_match("/[\s\']/", $filename)){
+			return array('msg' => 'File contains forbidden characters', 'msgType' => 'error', 'imageTitle' => $imageTitle);
 		}
 
-		// check if file already exists
+		/*
+		 * Check if file is a valid image
+		 */
+		$finfo = new finfo(FILEINFO_MIME_TYPE);
+		$fileType = $finfo->file($file['tmp_name']);
+		if (false === array_search($fileType, array('image/jpg', 'image/jpeg', 'image/png'))){
+			return array('msg' => 'Please, use the following image formats: jpg, jpeg, png.', 'msgType' => 'error', 'imageTitle' => $imageTitle);
+		}
 
+		/*
+		 * Check if user's directory exists, create if not
+		 */
+		$dir = BP."images/".$username;
+		if (!is_dir($dir)){
+			mkdir($dir);
+		}
+		/*
+		 * Check if file with such name exists in user's directory
+		 */
+		$filepath = $dir."/".$filename;
+		if (file_exists($filepath)){
+			return array('msg' => 'File already  exists', 'msgType' => 'error', 'imageTitle' => $imageTitle);
+		}
 
+		/* 
+		 * Check file size
+		 */
+		$filesize = filesize($file['tmp_name']);
+		if ($filesize > 5000000){
+			return array('msg' => 'Your file is too large', 'msgType' => 'error', 'imageTitle' => $imageTitle);
+		}
+
+		// Move uploaded file to it's new home directory
+		move_uploaded_file($file['tmp_name'], $filepath);
+
+		// Add image to the database
+		$id_image = ORM::uploadImage($imageTitle, $imageLocation, $user_id);
+
+		// Add image to array of images
+		array_push($this->images, new Image($id_image, $imageTitle, $imageLocation, $user_id, $username));
+		$this->photoCount++;
+
+		// Upload finished with success
 		return array('msg' => 'Upload succesful', 'msgType' => 'success');
-
-		// check file size
 	}
+
+	public function deleteImage($id_image){
+	
+	}
+}
+
+class Image{
+  private $image_id;
+  private $imageTitle;
+  private $imageLocation;
+  private $user_id;
+  private $username;
+
+  public function __construct($id, $title, $location, $user_id, $username){
+    $this->image_id = $id;
+    $this->imageTitle = $title;
+    $this->imageLocation = $location;
+    $this->user_id = $user_id;
+	$this->username = $username;
+  }
+
+	public function __get($property){
+		if (property_exists($this, $property)){
+			return $this->$property;
+		}
+	}
+
+	public function __set($property, $value){
+		if (property_exists($this, $property)){
+			$this->$property = $value;
+		}
+	}
+
+
+
+
 }

@@ -5,28 +5,40 @@ class HomeController extends AbstractSingletonController{
 	private $imgModel;
 	private $view;
 
-	public function invokeController(){
+	public function get(){
 		Session::start();
 
-			if (!Session::isLoggedIn()){
-				header("Location: http://localhost/inchooApp/");
-				return;
-			}
+		if (!Session::isLoggedIn()){
+			header("Location: http://localhost/inchooApp/");
+			return;
+		}
 
 		$this->imgModel = Images::getInstance();
-
-		$photoCount = $this->imgModel->getPhotoCount();
-		$imagesLocations = $this->imgModel->getImagesLocations();
-		$imagesOwners = $this->imgModel->getImagesOwners();
-		$imagesTitles = $this->imgModel->getImagesTitles();
-
-		$args = array('photoCount' => $photoCount,
-					  'imagesLocations' => $imagesLocations,
-					  'imagesOwners' => $imagesOwners,
-					  'imagesTitles' => $imagesTitles);
-
 		$this->view = new View('homeLayout');
-		$this->view->renderPage('home', $args);
+		$this->view->renderPage('home', array('photoCount' => $this->imgModel->photoCount, 'images' => $this->imgModel->images));
 	}
+
+	public function post(){
+    	Session::start();
+
+ 	   /*
+    	/ Check if image is actually posted
+    	
+    	if (!Request::post('uploadImage')){
+      		header("Location: http://localhost/inchooApp/home/");
+      		return;
+    	}
+		*/
+    	$this->imgModel = Images::getInstance();
+
+   	 	$uploadFeedback = $this->imgModel->uploadImage();
+
+   		$uploadFeedback['photoCount'] = $this->imgModel->photoCount;
+    	$uploadFeedback['images'] = $this->imgModel->images;
+    	$uploadFeedback['msgTitle'] = 'Image upload';
+    	$this->view = new View("homeLayout");
+    	$this->view->renderPage("home", $uploadFeedback);
+
+  	}
 
 }

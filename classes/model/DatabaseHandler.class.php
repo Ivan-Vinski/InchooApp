@@ -16,20 +16,20 @@ class DatabaseHandler{
 
 	public function dbConnect(){
 		try{
-			$this->dbConn = new PDO('mysql:host=localhost;dbname=inchooAppDB', 'root', ''); 
+			$this->dbConn = new PDO('mysql:host=localhost;dbname=inchooAppDB', 'root', '');
 			return true;
-		}	
+		}
 		catch (PDOException $e){
 			return false;
 		}
-	}	
+	}
 
 	public function createTables(){
 		$sql_create_users = 'CREATE TABLE IF NOT EXISTS users
 			(
 				id_user INT NOT NULL AUTO_INCREMENT,
 				username VARCHAR(20) NOT NULL,
-				email VARCHAR(20) NOT NULL,
+				email VARCHAR(30) NOT NULL,
 				password TEXT NOT NULL,
 				PRIMARY KEY(id_user),
 				CONSTRAINT unique_id_user UNIQUE(id_user)
@@ -39,13 +39,13 @@ class DatabaseHandler{
 			$stmnt_users->execute();
 		}
 		catch (PDOException $e){
-			return false;	
+			return false;
 		}
 		$sql_create_images = 'CREATE TABLE IF NOT EXISTS images
 			(
 				id_image INT NOT NULL AUTO_INCREMENT,
-				title VARCHAR(20) NOT NULL,
-				location VARCHAR(50) NOT NULL,
+				title VARCHAR(50) NOT NULL,
+				location VARCHAR(100) NOT NULL,
 				user_id INT NOT NULL,
 				PRIMARY KEY(id_image),
 				CONSTRAINT unique_id_image UNIQUE(id_image),
@@ -58,7 +58,7 @@ class DatabaseHandler{
 			return true;
 		}
 		catch (PDOException $e){
-			return false;	
+			return false;
 		}
 	}
 
@@ -67,26 +67,32 @@ class DatabaseHandler{
 		$statement->execute($args);
 		$result = $statement->fetchAll();
 		return $result;
-		
-	
+
+
 	}
 
 	public function getPhotoCount(){
 		$sql = "SELECT COUNT(*) FROM users u INNER JOIN images i ON u.id_user=i.user_id";
 		$count = $this->prepareAndExecute($sql);
 		return $count[0][0];
-		
+
+	}
+
+	public function getUserId($username){
+		$sql = "SELECT id_user FROM users WHERE username LIKE ?";
+		$id_user = $this->prepareAndExecute($sql, array($username));
+		return (empty($id_user)) ? '' : $id_user[0][0];
 	}
 
 	public function getUsername($username){
 		$sql = "SELECT username FROM users WHERE username LIKE ?";
-		$dbUsername = $this->prepareAndExecute($sql, array($username));	
+		$dbUsername = $this->prepareAndExecute($sql, array($username));
 		return (empty($dbUsername)) ? '' : $dbUsername[0][0];
 	}
 
 	public function getPassword($username){
-		$sql = "SELECT password FROM users WHERE username LIKE ?"; 
-		$password = $this->prepareAndExecute($sql, array($username)); 
+		$sql = "SELECT password FROM users WHERE username LIKE ?";
+		$password = $this->prepareAndExecute($sql, array($username));
 		return (empty($password)) ? "" : $password[0][0];
 
 	}
@@ -102,23 +108,24 @@ class DatabaseHandler{
 		$stmnt = $this->prepareAndExecute($sql, array($username, $email, $password));
 	}
 
-	public function getImagesLocations(){
-		$sql = "SELECT location FROM images";
-		$stmnt = $this->prepareAndExecute($sql);
-		return $stmnt;
+	public function getImages(){
+ 
+		$sql = "SELECT i.id_image, i.title, i.location, i.user_id, u.username FROM images i join users u on u.id_user=i.user_id";
+		$images = $this->prepareAndExecute($sql);
+		return $images;
 	}
 
-	public function getImagesTitles(){
-		$sql = "SELECT title FROM images";
-		$stmnt = $this->prepareAndExecute($sql);
-		return $stmnt;
+	public function getImageId($filepath){
+		$sql = "SELECT id_image FROM images WHERE location LIKE ?";
+		$id_image = $this->prepareAndExecute($sql, array($filepath));
+		return $id_image[0][0];
 	}
 
-	public function getImagesOwners(){
-		$sql = "SELECT u.username FROM images i INNER JOIN users u ON i.user_id=u.id_user";
-		$stmnt = $this->prepareAndExecute($sql);
-		return $stmnt;
+	public function insertImage($imageTitle, $filepath, $user_id){
+		$sql = "INSERT INTO images VALUES (default, ?, ?, ?)";
+		$stmnt = $this->prepareAndExecute($sql, array($imageTitle, $filepath, $user_id));
+
 	}
 
-	
+
 }
