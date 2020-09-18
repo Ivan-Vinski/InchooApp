@@ -8,7 +8,6 @@ abstract class AbstractSingletonController{
  * 
 */
 	private static $instances = [];
-	protected $session;
 // Not using constructor in a singleton pattern.
 	private function __construct(){}
 

@@ -1,35 +1,21 @@
 <?php echo (isset($msg)) ? $msg : ''; ?>
 
-
-
-<div id="formContainer" class='tabcontent'>
-
-	<form action='http://localhost/inchooApp/home/' method='post' enctype=multipart/form-data>
-	<label>Title: </label><input type='text' name='titleInput' value= <?php echo (isset($imageTitle)) ? $imageTitle : '' ?>>
-		<input type='file' name='imageInput'>
-		<input type='submit' value='Upload' name='uploadImage'>
-	</form>
-
-
-
-</div>
-
 <?php
-echo "<div id='photosContainer' class='tabcontent'>";
-
-for ($i = 0; $i < $photoCount; $i++){
-
+foreach($images as $image){
 	echo "
 		<div class='photoContainer'>
-			<p id='username'>".$images[$i]->username."</p>
-			<p id='title'>".$images[$i]->imageTitle." </p>
-			<img src="."http://localhost/inchooApp/images/".$images[$i]->imageLocation." alt='image'></img>
+			<p id='username'>".$image[4]."</p>
+			<p id='title'>".$image[1]." </p>
+			<img src="."http://localhost/inchooApp/images/".$image[2]." alt='image'></img>
 
 	";
 
-	if ($images[$i]->user_id == Session::getLoggedInUserId()){
+	if ($image[3] == Session::getLoggedInUserId()){
 		// display delete image button
-		echo "<br><button >Delete </button>";
+		echo "<form method='POST' action='http://localhost/inchooApp/home/'>
+			<input name='inputDelete' type='hidden' value='".$image[0]."'></input>
+			<button type='submit'>Delete</button>
+			</form>";
 	}
 
 	echo "</div>";
@@ -37,4 +23,3 @@ for ($i = 0; $i < $photoCount; $i++){
 
 }
 
-echo "</div>";

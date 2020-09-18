@@ -1,0 +1,17 @@
+<?php echo (isset($msg)) ? $msg : ''; ?>
+
+
+<div id="formContainer" >
+
+	<form action='http://localhost/inchooApp/upload/' method='post' enctype=multipart/form-data>
+	<label id='imageTitleLabel'>Image title: </label><input id='titleInput' type='text' name='titleInput' value= <?php echo (isset($imageTitle)) ? $imageTitle : '' ?>>
+		<br><br><br><br>
+		<input type='file' name='imageInput'><br><br><br><br>
+		<button id='submitButton' type='submit' value='Upload' name='uploadImage'>Upload</button>
+	</form>
+
+
+
+</div>
+
+

@@ -50,8 +50,6 @@ class LoginController extends AbstractSingletonController{
 		if (!$loginFeedback){
 			// Login is succesful
 			Header("Location: http://localhost/inchooApp/home/");
-//			$this->view = new View('homeLayout');
-//			$this->view->renderPage('home');
 		}
 		else {
 			$loginFeedback['msgTitle'] = 'Login';

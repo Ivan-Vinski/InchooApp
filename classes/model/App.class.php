@@ -2,6 +2,7 @@
 
 final class App{
 	private static $dbHandler;
+	public static $imgModel;
 	public static function start(){
 		/*
 		 * Check if all database tables exist
@@ -9,6 +10,8 @@ final class App{
 		 * Use database handler
 		 */
 		if(self::checkDB()){
+			self::$imgModel = Images::getInstance();
+//			var_dump(self::$imgModel);
 			self::callController();
 		}
 	}

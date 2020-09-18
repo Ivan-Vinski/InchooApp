@@ -2,7 +2,7 @@
 
 class HomeController extends AbstractSingletonController{
 
-	private $imgModel;
+	private $model;
 	private $view;
 
 	public function get(){
@@ -13,32 +13,18 @@ class HomeController extends AbstractSingletonController{
 			return;
 		}
 
-		$this->imgModel = Images::getInstance();
+		$this->model = Images::getInstance(); 
+		$images = $this->model->getImages();
+
 		$this->view = new View('homeLayout');
-		$this->view->renderPage('home', array('photoCount' => $this->imgModel->photoCount, 'images' => $this->imgModel->images));
+		$this->view->renderPage('home', array('photoCount' => $this->model->getPhotoCount(), 'images' => $images));
 	}
 
 	public function post(){
-    	Session::start();
-
- 	   /*
-    	/ Check if image is actually posted
-    	
-    	if (!Request::post('uploadImage')){
-      		header("Location: http://localhost/inchooApp/home/");
-      		return;
-    	}
-		*/
-    	$this->imgModel = Images::getInstance();
-
-   	 	$uploadFeedback = $this->imgModel->uploadImage();
-
-   		$uploadFeedback['photoCount'] = $this->imgModel->photoCount;
-    	$uploadFeedback['images'] = $this->imgModel->images;
-    	$uploadFeedback['msgTitle'] = 'Image upload';
-    	$this->view = new View("homeLayout");
-    	$this->view->renderPage("home", $uploadFeedback);
-
-  	}
+		Session::start();
+		$this->model = Images::getInstance();
+		$deleteFeedback = $this->model->deleteImage();
+		header("Location: http://localhost/inchooApp/home");
+	}
 
 }

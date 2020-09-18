@@ -13,7 +13,7 @@ class View{
 
 	public function renderPage($name, $args = []){
 		ob_start();
-		$args = self::escapeHTML($args);
+		//$args = self::escapeHTML($args);
 		extract($args);
 
 		if (isset($args['msg'])) $msg = $this->createToastr($args['msgTitle'], $args['msg'], $args['msgType']);

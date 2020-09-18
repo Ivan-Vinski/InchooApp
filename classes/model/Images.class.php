@@ -1,19 +1,12 @@
 <?php
-
+//
 
 class Images{
-
 	private static $instance;
-	public $images;
-	public $photoCount;
+	private $dbHandler;
 
 	private function __construct(){
-		/*
-		/ get all images as images objects into $images array
-		/ get photo count
-		*/
-		$this->images = ORM::getImages();
-		$this->photoCount = count($this->images);
+		$this->dbHandler = DatabaseHandler::getDBInstance();
 	}
 
 	public static function getInstance(){
@@ -24,7 +17,12 @@ class Images{
 	}
 
 	public function getPhotoCount(){
-		return $this->photoCount;
+		return $this->dbHandler->getPhotoCount();
+	}
+
+	public function getImages(){
+		$images = $this->dbHandler->getImages();
+		return $images;
 	}
 
 
@@ -37,7 +35,7 @@ class Images{
 		$imageLocation = $username."/".$filename;
 
 		if (!isset($file['name']) || empty($file['name'])){
-			return array('msg' => 'Please, select image to upload.', 'msgType' => 'error');
+			return array('msg' => 'Select image to upload.', 'msgType' => 'error');
 		}
 
 		/*
@@ -54,7 +52,7 @@ class Images{
 		$finfo = new finfo(FILEINFO_MIME_TYPE);
 		$fileType = $finfo->file($file['tmp_name']);
 		if (false === array_search($fileType, array('image/jpg', 'image/jpeg', 'image/png'))){
-			return array('msg' => 'Please, use the following image formats: jpg, jpeg, png.', 'msgType' => 'error', 'imageTitle' => $imageTitle);
+			return array('msg' => 'Use the following image formats: jpg, jpeg, png.', 'msgType' => 'error', 'imageTitle' => $imageTitle);
 		}
 
 		/*
@@ -69,7 +67,7 @@ class Images{
 		 */
 		$filepath = $dir."/".$filename;
 		if (file_exists($filepath)){
-			return array('msg' => 'File already  exists', 'msgType' => 'error', 'imageTitle' => $imageTitle);
+			return array('msg' => 'File already exists', 'msgType' => 'error', 'imageTitle' => $imageTitle);
 		}
 
 		/* 
@@ -77,56 +75,34 @@ class Images{
 		 */
 		$filesize = filesize($file['tmp_name']);
 		if ($filesize > 5000000){
-			return array('msg' => 'Your file is too large', 'msgType' => 'error', 'imageTitle' => $imageTitle);
+			return array('msg' => 'File is too large', 'msgType' => 'error', 'imageTitle' => $imageTitle);
 		}
 
 		// Move uploaded file to it's new home directory
 		move_uploaded_file($file['tmp_name'], $filepath);
 
 		// Add image to the database
-		$id_image = ORM::uploadImage($imageTitle, $imageLocation, $user_id);
-
-		// Add image to array of images
-		array_push($this->images, new Image($id_image, $imageTitle, $imageLocation, $user_id, $username));
+		$this->dbHandler->insertImage($imageTitle, $imageLocation, $user_id);
+		//$id_image = $this->dbHandler->getImageId($imageLocation);
 		$this->photoCount++;
 
 		// Upload finished with success
-		return array('msg' => 'Upload succesful', 'msgType' => 'success');
+		return array('msg' => 'Succesful', 'msgType' => 'success');
 	}
 
-	public function deleteImage($id_image){
-	
+	public function deleteImage(){
+		$id_image = Request::post('inputDelete');
+
+		// Delete from database
+		$this->dbHandler->deleteImage($id_image);
+		foreach($this->images as $image){
+			if ($image->id_image == $id_image){
+				// Delete from filesystem
+				unlink(BP."images/".$image->imageLocation);
+				// Delete from array of images
+			}
+		}
 	}
 }
 
-class Image{
-  private $image_id;
-  private $imageTitle;
-  private $imageLocation;
-  private $user_id;
-  private $username;
 
-  public function __construct($id, $title, $location, $user_id, $username){
-    $this->image_id = $id;
-    $this->imageTitle = $title;
-    $this->imageLocation = $location;
-    $this->user_id = $user_id;
-	$this->username = $username;
-  }
-
-	public function __get($property){
-		if (property_exists($this, $property)){
-			return $this->$property;
-		}
-	}
-
-	public function __set($property, $value){
-		if (property_exists($this, $property)){
-			$this->$property = $value;
-		}
-	}
-
-
-
-
-}

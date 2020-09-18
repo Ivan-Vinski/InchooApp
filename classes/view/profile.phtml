@@ -1,0 +1,15 @@
+<?php if(isset($msg)){ echo $msg ;} ?>
+
+<form  action="http://localhost/inchooApp/profile/" method="POST">
+	<label>New password: </label><input type="password" name="newPasswordInput"></input>
+	<labeel>Repeat Password: </label><input type="password" name="newPasswordInputRepeat"></input>
+	<input type="submit" name="changePassword"></input>
+
+</form>
+
+<form action="http://localhost/inchooApp/delete/" method="POST">
+	<input type="hidden" value="deleteAccInput">
+	<input type="submit" name="deleteUser"></input>
+
+
+</form>

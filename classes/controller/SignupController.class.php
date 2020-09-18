@@ -14,8 +14,6 @@ class SignupController extends AbstractSingletonController{
 		$this->model = Users::getInstance();
 		$args = $this->model->registerUser();
 		if (!$args){
-//			$this->view = new View('loginRegisterLayout');
-//			$this->view->renderPage('login');
 			header("Location: http://localhost/inchooApp/login/");
 		}
 		else {
