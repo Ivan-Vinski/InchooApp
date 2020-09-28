@@ -84,7 +84,6 @@ class Images{
 		// Add image to the database
 		$this->dbHandler->insertImage($imageTitle, $imageLocation, $user_id);
 		//$id_image = $this->dbHandler->getImageId($imageLocation);
-		$this->photoCount++;
 
 		// Upload finished with success
 		return array('msg' => 'Succesful', 'msgType' => 'success');

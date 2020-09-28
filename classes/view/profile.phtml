@@ -1,15 +1,17 @@
 <?php if(isset($msg)){ echo $msg ;} ?>
+<div id='changePassFormCont'>
+	<form  action="http://localhost/inchooApp/profile/" method="POST" id='changePassForm'>
+		<br><label>New password: </label><input type="password" name="newPasswordInput"></input><br><br>
+		<label>Repeat Password: </label><input type="password" name="newPasswordInputRepeat"></input><br><br>
+		<input type="submit" name="changePassword" value="Change Password" id='changePassButton' class='inchButton'></input>
 
-<form  action="http://localhost/inchooApp/profile/" method="POST">
-	<label>New password: </label><input type="password" name="newPasswordInput"></input>
-	<labeel>Repeat Password: </label><input type="password" name="newPasswordInputRepeat"></input>
-	<input type="submit" name="changePassword"></input>
+	</form>
+</div>
 
-</form>
+<div id='deleteAccFormCont'>
+	<form action="http://localhost/inchooApp/delete/" method="POST" id='deleteAccForm'>
+		<input type="hidden" value="deleteAccInput">
+		<input type="submit" id='deleteAccountButton' name="deleteUser" value="Delete account"></input>
 
-<form action="http://localhost/inchooApp/delete/" method="POST">
-	<input type="hidden" value="deleteAccInput">
-	<input type="submit" name="deleteUser"></input>
-
-
-</form>
+	</form>
+</div>

@@ -1,6 +1,9 @@
-<?php echo (isset($msg)) ? $msg : ''; ?>
+<?php 
 
-<?php
+echo (isset($msg)) ? $msg : ''; 
+
+
+
 foreach($images as $image){
 	echo "
 		<div class='photoContainer'>
@@ -14,7 +17,7 @@ foreach($images as $image){
 		// display delete image button
 		echo "<form method='POST' action='http://localhost/inchooApp/home/'>
 			<input name='inputDelete' type='hidden' value='".$image[0]."'></input>
-			<button type='submit'>Delete</button>
+			<button type='submit' class='inchButton' id='deleteButton'>Delete</button>
 			</form>";
 	}
 
